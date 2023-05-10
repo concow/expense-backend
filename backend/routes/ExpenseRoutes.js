@@ -10,8 +10,10 @@ const {
   deleteExpense,
 } = require("../controllers/ExpenseController");
 
-router.route("/").get(getExpenses).post(setExpense);
-router.route("/:id").put(updateExpense).delete(deleteExpense);
+const { protect } = require("../middleware/AuthMiddleware");
+
+router.route("/").get(protect, getExpenses).post(protect, setExpense);
+router.route("/:id").put(protect, updateExpense).delete(protect, deleteExpense);
 
 // router.put("/:id", updateExpense);
 // router.delete("/:id", deleteExpense);
