@@ -10,3 +10,5 @@
 
 -bcrypt / Json Web Tokens
 -Authentication, Authorization
+
+-npm install cors

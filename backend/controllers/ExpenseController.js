@@ -1,6 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const Expense = require("../models/ExpenseModel");
-const User = require("../models/UserModel");
+// const User = require("../models/UserModel");
 
 //@description  Get Expenses
 //@route    GET /api/expenses
@@ -14,6 +14,7 @@ const getExpenses = asyncHandler(async (req, res) => {
 //@route    POST /api/expenses
 //@access   Private
 const setExpense = asyncHandler(async (req, res) => {
+  // (!req.body)
   if (!req.body.title) {
     res.status(400);
     throw new Error("Please add a title");
@@ -21,6 +22,7 @@ const setExpense = asyncHandler(async (req, res) => {
   const expense = await Expense.create({
     title: req.body.title,
     amount: req.body.amount,
+    date: req.body.date,
     user: req.user.id,
   });
   res.status(200).json(expense);
@@ -35,15 +37,14 @@ const updateExpense = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error("Expense not found");
   }
-  const user = await User.findById(req.user.id);
 
   //Check for User
-  if (!user) {
+  if (!req.user) {
     res.status(401);
     throw new Error("User Not Found");
   }
   //Make sure logged in User matches the expense User
-  if (expense.user.toString() !== user.id) {
+  if (expense.user.toString() !== req.user.id) {
     res.status(401);
     throw new Error("User not authorized");
   }
@@ -62,15 +63,13 @@ const deleteExpense = asyncHandler(async (req, res) => {
   const expense = await Expense.findById(req.params.id);
   //Not reaching this when put in dummy ID - gotta fix
 
-  const user = await User.findById(req.user.id);
-
   //Check for User
-  if (!user) {
+  if (!req.user) {
     res.status(401);
     throw new Error("User Not Found");
   }
   //Make sure logged in User matches the expense User
-  if (expense.user.toString() !== user.id) {
+  if (expense.user.toString() !== req.user.id) {
     res.status(401);
     throw new Error("User not authorized");
   }
