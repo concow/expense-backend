@@ -1,14 +1,19 @@
-# expense-backend
+# ExpenseTracker Backend
 
-## ExpressJS / NodeJS / MongoDB (Mongoose)
+## Stack & Structure
 
--npm run server
+- ExpressJS / NodeJS / MongoDB (Mongoose)
+- User Model / Expense Model
+- Complete CRUD functionality
+  - Using REST API routes for auth, login, register, create, delete
+- Protected routes and endpoints
+- JSON Web Tokens / bcrypt
+- Authentication, Authorization
 
--User model / Expense Model
+## Dependencies
 
-## Complete CRUD functionality
+- npm install cors, for seperate repository compliance
 
--bcrypt / Json Web Tokens
--Authentication, Authorization
+## Run
 
--npm install cors
+`npm run server`
